@@ -1,0 +1,194 @@
+<h1> b <button onclick="download('con1','b')">下载</button></h1>
+<div id="con1" class="con"></div>
+<h1>f<button onclick="download('con2','f')">下载</button></h1>
+<div id="con2" class="con"></div>
+<h1>r<button onclick="download('con3','r')">下载</button> </h1>
+<div id="con3" class="con"></div>
+<h1>l<button onclick="download('con4','l')">下载</button></h1>
+<div id="con4" class="con"></div>
+<h1>u<button onclick="download('con5','u')">下载</button></h1>
+<div id="con5" class="con"></div>
+<h1>d<button onclick="download('con6','d')">下载</button></h1>
+<div id="con6" class="con"></div>
+<style>
+    * {
+        padding: 0px;
+        margin: 0px;
+        box-sizing: border-box;
+    }
+    
+    .con img {
+        width: 700px;
+        height: 700px;
+    }
+    
+    h1 {
+        display: block;
+        text-align: center;
+    }
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+    // http://120.24.68.16/pano/gqzhangaun/render/panos/1.tiles/f/l3/1/l3_f_1_1.jpg
+
+
+    function createImg(src, fn) {
+        let image = new Image(); //新建一个img标签
+        image.src = src;
+        image.onload = function() {
+            let canvas = document.createElement('canvas');
+            let context = canvas.getContext('2d');
+            // 定义 canvas 大小，也就是压缩后下载的图片大小
+            let imageWidth = 700; //压缩后图片的大小
+            let imageHeight = 700;
+            canvas.width = imageWidth;
+            canvas.height = imageHeight;
+            // 图片不压缩，全部加载展示
+            context.drawImage(image, 0, 0, imageWidth, imageHeight);
+
+            // 图片按压缩尺寸载入
+            // let imageWidth = 500; //压缩后图片的大小
+            // let imageHeight = 200;
+            // context.drawImage(image, 0, 0, 500, 200);
+            // 图片去截取指定位置载入
+            // context.drawImage(image,100, 100, 100, 100, 0, 0, imageWidth, imageHeight);
+            fn(canvas.toDataURL(`image/png`))
+
+            //   };
+        };
+
+    }
+
+
+    select()
+
+
+    function select() {
+
+        document.querySelector("#con1").innerHTML = "";
+        document.querySelector("#con2").innerHTML = "";
+        document.querySelector("#con3").innerHTML = "";
+        document.querySelector("#con4").innerHTML = "";
+        document.querySelector("#con5").innerHTML = "";
+        document.querySelector("#con6").innerHTML = "";
+
+
+
+
+
+        var flag = "b"
+        var url = `${flag}.jpg`
+        var img1 = document.createElement("img")
+        createImg(url, function(base64) {
+            img1.src = base64;
+            document.querySelector("#con1").appendChild(img1)
+        })
+
+
+
+
+
+
+        var flag = "f"
+        var url = `${flag}.jpg`
+        var img2 = document.createElement("img")
+        createImg(url, function(base64) {
+            img2.src = base64;
+            document.querySelector("#con2").appendChild(img2)
+        })
+
+
+
+
+
+        var flag = "r"
+        var url = `${flag}.jpg`
+        var img3 = document.createElement("img")
+        createImg(url, function(base64) {
+            img3.src = base64;
+            document.querySelector("#con3").appendChild(img3)
+        })
+
+
+
+
+        var flag = "l"
+        var url = `${flag}.jpg`
+        var img4 = document.createElement("img")
+        createImg(url, function(base64) {
+            img4.src = base64;
+            document.querySelector("#con4").appendChild(img4)
+        })
+
+
+
+
+        var flag = "u"
+        var url = `${flag}.jpg`
+        var img5 = document.createElement("img")
+        createImg(url, function(base64) {
+            img5.src = base64;
+            document.querySelector("#con5").appendChild(img5)
+        })
+
+
+
+
+        var flag = "d"
+        var url = `${flag}.jpg`
+        var img6 = document.createElement("img")
+        createImg(url, function(base64) {
+            img6.src = base64;
+            document.querySelector("#con6").appendChild(img6)
+        })
+
+
+
+
+
+    }
+
+
+
+
+    function download(id, flag) {
+
+
+
+        // html2canvas接收dom节点，返回canvas，即node生成的canvas
+        html2canvas(document.querySelector("#" + id + " img")).then((canvas) => {
+            var url = canvas.toDataURL();
+            var a = document.createElement('a');
+            a.download = flag + '.png'; //设置图片名称
+            var event = new MouseEvent('click');
+            a.href = url;
+            a.dispatchEvent(event); //触发a的单击事件
+        });
+    }
+    setTimeout(() => {
+        document.querySelectorAll("button").forEach(function(item) {
+            item.click();
+        })
+    }, 10000)
+</script>
